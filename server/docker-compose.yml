@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - GO_ENV=development
+      - POSTGRES_URI=${crud-go_POSTGRES_URI}
+    volumes:
+      - .:/go/src/github.com/dongri/crud-go/server
+    logging:
+      options:
+        max-size: "500k"
+    ports:
+      - "0.0.0.0:3001:3001"
+    external_links:
+      - crud-go_postgres
+    networks:
+      - crud-go_network
+
+networks:
+  crud-go_network:
+    external: true
