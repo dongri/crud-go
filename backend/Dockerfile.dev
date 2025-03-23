@@ -1,0 +1,12 @@
+FROM golang:1.24-alpine
+LABEL  maintainer "Dongri Jin <dongrium@gmail.com>"
+
+RUN apk add --no-cache alpine-sdk
+
+RUN go install github.com/air-verse/air@v1.61.7
+RUN go env -w GOFLAGS="-buildvcs=false"
+
+ADD . /go/src/github.com/dongri/crud-go/backend
+WORKDIR /go/src/github.com/dongri/crud-go/backend
+
+CMD ["air"]

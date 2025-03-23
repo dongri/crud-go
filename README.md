@@ -3,14 +3,14 @@
 ## infra
 ```
 $ cd infra
-$ docker network create crud-go_network
+$ docker network create crud-go-network
 $ docker-compose up --build -d
 $ docker-compose logs -f
 ```
 
-## server
+## backend
 ```
-$ cd server
+$ cd backend
 $ go install github.com/pressly/goose/v3/cmd/goose@latest
 
 $ goose -dir db postgres "host=localhost port=5432 user=postgres dbname=crud-go sslmode=disable" up
@@ -19,9 +19,9 @@ $ docker-compose up --build -d
 $ docker-compose logs -f
 ```
 
-## front
+## frontend
 ```
-$ cd front
+$ cd frontend
 $ yarn install
 $ yarn start
 ```

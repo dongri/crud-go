@@ -1,11 +1,9 @@
-version: "3"
-
 services:
 
-  crud-go_postgres:
+  crud-go-postgres:
     platform: linux/x86_64
     image: postgres:latest
-    container_name: crud-go_postgres
+    container_name: crud-go-postgres
     environment:
       POSTGRES_HOST_AUTH_METHOD: 'trust'
     volumes:
@@ -14,8 +12,8 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     networks:
-      - crud-go_network
+      - crud-go-network
 
 networks:
-  crud-go_network:
+  crud-go-network:
     external: true

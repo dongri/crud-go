@@ -1,0 +1,25 @@
+services:
+  crud-go-backend:
+    container_name: crud-go-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - GO_ENV=development
+      - PORT=3001
+      - POSTGRES_URI=postgres://postgres@crud-go-postgres:5432/crud-go?sslmode=disable
+    volumes:
+      - .:/go/src/github.com/dongri/crud-go/backend
+    logging:
+      options:
+        max-size: "500k"
+    ports:
+      - "127.0.0.1:3001:3001"
+    external_links:
+      - crud-go-postgres
+    networks:
+      - crud-go-network
+
+networks:
+  crud-go-network:
+    external: true
