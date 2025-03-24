@@ -18,6 +18,7 @@ $ goose -dir db postgres "host=localhost port=5432 user=postgres dbname=crud-go 
 $ docker-compose up --build -d
 $ docker-compose logs -f
 ```
+http://localhost:3001
 
 ## frontend
 ```
@@ -25,6 +26,4 @@ $ cd frontend
 $ yarn install
 $ yarn start
 ```
-
 http://localhost:3000
-
