@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 
-import { PublicGet, PublicPost } from '@/api/client';
+import { useClient } from '@/api/client';
 import { Post } from '@/types/post';
 import { Comment } from '@/types/comment';
 
 export default function Show() {
   const router = useRouter();
+  const { publicGet, publicPost } = useClient();
 
   const params = useParams();
 
@@ -24,7 +25,7 @@ export default function Show() {
   });
 
   const fetchPost = async () => {
-    const result = await PublicGet(`/posts/${id}`);
+    const result = await publicGet(`/posts/${id}`);
     if (result.error) {
       alert(result.error);
       return
@@ -33,7 +34,7 @@ export default function Show() {
   };
 
   const fetchComments = async () => {
-    const result = await PublicGet(`/posts/${id}/comments`);
+    const result = await publicGet(`/posts/${id}/comments`);
     if (result.error) {
       alert(result.error);
       return
@@ -56,7 +57,7 @@ export default function Show() {
 
   const handleSubmit = async () => {
     try {
-      const data = await PublicPost(`/posts/${id}/comments`, {
+      const data = await publicPost(`/posts/${id}/comments`, {
         body: state.body,
       });
 
@@ -75,14 +76,14 @@ export default function Show() {
 
   const handleDelete = async () => {
     try {
-      const data = await PublicPost(`/posts/${id}/delete`, {});
+      const data = await publicPost(`/posts/${id}/delete`, {});
 
       if (data.error) {
         alert(data.error);
         return
       }
       alert('Post deleted');
-      router.replace('/posts');
+      router.push('/posts');
     }
     catch (error) {
       console.error('Error deleting post:', error);

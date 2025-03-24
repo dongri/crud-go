@@ -1,15 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { PublicPost } from '@/api/client';
+import { useClient } from '@/api/client';
 import { useRouter, useParams } from 'next/navigation'
-import { PublicGet } from '@/api/client';
 import { Post } from '@/types/post';
 import Link from 'next/link'
 
 export default function New() {
   
   const router = useRouter();
+  const { publicGet, publicPost } = useClient();
 
   const params = useParams();
   const id = params?.id;
@@ -23,7 +23,7 @@ export default function New() {
   });
 
   const fetchPost = async () => {
-    const result = await PublicGet(`/posts/${id}`);
+    const result = await publicGet(`/posts/${id}`);
     if (result.error) {
       alert(result.error);
       return
@@ -45,7 +45,7 @@ export default function New() {
 
   const handleSubmit = async () => {
     try {
-      const data = await PublicPost(`/posts/${id}/update`, {
+      const data = await publicPost(`/posts/${id}/update`, {
         title: state.title,
         body: state.body,
       });

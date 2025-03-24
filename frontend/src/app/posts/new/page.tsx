@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { PublicPost } from '@/api/client';
+import { useClient } from '@/api/client';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 
 export default function New() {
-  
   const router = useRouter();
+  const { publicPost } = useClient();
 
   const [state, setState] = useState({
     title: "",
@@ -24,7 +24,7 @@ export default function New() {
 
   const handleSubmit = async () => {
     try {
-      const data = await PublicPost('/posts', {
+      const data = await publicPost('/posts', {
         title: state.title,
         body: state.body,
       });

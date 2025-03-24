@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import { LoadingProvider } from './loading-context';
+import LoadingBar from './LoadingBar';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,9 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="container mx-auto px-4 py-4">
-          {children}
-        </div>
+        <LoadingProvider>
+          <LoadingBar />
+          <div className="container mx-auto px-4 py-4">
+            {children}
+          </div>
+        </LoadingProvider>
       </body>
     </html>
   );
