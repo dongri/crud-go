@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 import { PublicGet, PublicPost } from '@/api/client';
 import { Post } from '@/types/post';
 import { Comment } from '@/types/comment';
 
 export default function Show() {
+  const router = useRouter();
+
   const params = useParams();
 
   const id = params?.id;
@@ -71,6 +73,23 @@ export default function Show() {
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      const data = await PublicPost(`/posts/${id}/delete`, {});
+
+      if (data.error) {
+        alert(data.error);
+        return
+      }
+      alert('Post deleted');
+      router.replace('/posts');
+    }
+    catch (error) {
+      console.error('Error deleting post:', error);
+      alert('An error occurred while deleting the post. Please try again.');
+    }
+  }
+
   return (
     <div>
       <h1 className='text-2xl font-bold'>Post</h1>
@@ -85,6 +104,7 @@ export default function Show() {
       <div>
         <Link href={`/posts/${id}/edit`} className='text-blue-500 m-2'>Edit</Link>
         <Link href="/posts" className='text-blue-500 m-2'>Back</Link>
+        <Link href="#" className='text-blue-500 m-2' onClick={handleDelete}>Delete</Link>
       </div>
       <div className='mt-4 mb-4'>
         <h2 className='text-l font-bold'>Comments</h2>
