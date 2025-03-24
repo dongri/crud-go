@@ -28,5 +28,3 @@ $ yarn start
 
 http://localhost:3000
 
-## Demo
-https://crud-go.onrender.com/
