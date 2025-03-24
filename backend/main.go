@@ -28,7 +28,10 @@ func main() {
 		port = defaultPort
 	}
 
-	config.SetEnvironment(env)
+	if err := config.SetEnvironment(env); err != nil {
+		fmt.Printf("Error setting environment: %v\n", err)
+		os.Exit(1)
+	}
 
 	dbmap := postgres.NewPostgres()
 	defer dbmap.Db.Close()
